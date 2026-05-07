@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #e8f5f9 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #8b5a8e;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(139, 90, 142, 0.1);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            color: #a87ba8;
+        }
+
+        .tasks-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .task-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(139, 90, 142, 0.15);
+            border-left: 5px solid #ffc0e3;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .task-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(139, 90, 142, 0.25);
+        }
+
+        .task-section h2 {
+            color: #d996d9;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 2px solid #f0e6ff;
+            padding-bottom: 10px;
+        }
+
+        .task-section h3 {
+            color: #b87db8;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .task1-content {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .task1-content p {
+            color: #8b5a8e;
+            font-size: 1.1em;
+            margin: 15px 0;
+        }
+
+        .variables-display {
+            background: linear-gradient(135deg, #fff5f8 0%, #f5f5ff 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 2px solid #ffc0e3;
+        }
+
+        .var-item {
+            background: white;
+            padding: 12px 15px;
+            margin: 8px 0;
+            border-radius: 8px;
+            color: #7a5a7d;
+            border-left: 4px solid #ffb3d9;
+            font-weight: 500;
+        }
+
+        .operation {
+            background: #fff0f7;
+            padding: 10px 15px;
+            margin: 6px 0;
+            border-radius: 6px;
+            color: #6b4a6e;
+            border-left: 3px solid #ffc0e3;
+        }
+
+        .task3-container {
+            background: linear-gradient(135deg, #fff5f8 0%, #ffe8f5 100%);
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px dashed #ffb3d9;
+        }
+
+        #myParagraph {
+            color: #8b5a8e;
+            font-size: 1.2em;
+            margin: 20px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s ease;
+            box-shadow: inset 0 2px 5px rgba(139, 90, 142, 0.1);
+        }
+
+        .task4-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        #styleBox {
+            background: linear-gradient(135deg, #ffc0e3 0%, #ffb3d9 100%);
+            padding: 30px;
+            border-radius: 12px;
+            font-size: 18px;
+            color: white;
+            text-align: center;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 20px rgba(255, 192, 227, 0.4);
+            font-weight: 500;
+        }
+
+        .style-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .task5-container {
+            background: linear-gradient(135deg, #fff5f8 0%, #f0f5ff 100%);
+            padding: 25px;
+            border-radius: 10px;
+            border: 2px solid #e8c5f5;
+        }
+
+        .list-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        #itemList {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        #itemList li {
+            background: white;
+            padding: 15px 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            color: #8b5a8e;
+            border-left: 4px solid #d996d9;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 2px 8px rgba(139, 90, 142, 0.1);
+        }
+
+        #itemList li:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(139, 90, 142, 0.2);
+            background: linear-gradient(135deg, #fff5f8 0%, #f5f0ff 100%);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .item-counter {
+            background: linear-gradient(135deg, #d996d9 0%, #ffc0e3 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 15px;
+            box-shadow: 0 4px 10px rgba(217, 150, 217, 0.3);
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ffb3d9 0%, #ffc0e3 100%);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 192, 227, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #b3e5b3 0%, #c0f0c0 100%);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(179, 229, 179, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ffb3b3 0%, #ffc0c0 100%);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 179, 179, 0.4);
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #b3d9ff 0%, #c0e6ff 100%);
+        }
+
+        .btn-info:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(179, 217, 255, 0.4);
+        }
+
+        .console-output {
+            background: #f8f5fa;
+            border: 2px solid #d996d9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            color: #8b5a8e;
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .console-line {
+            padding: 5px 0;
+            border-bottom: 1px solid #e8c5f5;
+        }
+
+        .console-line:last-child {
+            border-bottom: none;
+        }
+
+        @media (max-width: 768px) {
+            .task4-container {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .list-buttons {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+
+        .note {
+            background: #fff5f8;
+            border-left: 4px solid #d996d9;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 5px;
+            color: #8b5a8e;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌸 JavaScript  🌸</h1>
+        <p>meow</p>
+    </div>
+
+    <div class="tasks-container">
+
+        <div class="task-section">
+            <h2>Task 1</h2>
+            <div class="task1-content">
+                <p>F12</p>
+                <div class="console-output" id="task1-console"></div>
+                <div class="note">💡Hello, JavaScript World!</div>
+            </div>
+        </div>
+
+        <div class="task-section">
+            <h2>Task 2</h2>
+            
+            <h3>📊 Declared Variables:</h3>
+            <div class="variables-display" id="variables-display"></div>
+            
+            <h3>➕ Arithmetic Operations:</h3>
+            <div class="console-output" id="operations-output"></div>
+            
+            <h3>📝 String Concatenation:</h3>
+            <div class="console-output" id="strings-output"></div>
+        </div>
+
+        <div class="task-section">
+            <h2>Task 3: Content Modification</h2>
+            <div class="task3-container">
+                <p id="myParagraph">This is the original paragraph text. Click the button below to change it.</p>
+                <button class="btn-primary" id="changeButton">✨ Change Text</button>
+            </div>
+        </div>
+
+        <div class="task-section">
+            <h2>Task 4: Style Modification</h2>
+            <div class="task4-container">
+                <div id="styleBox">
+                    🎨 This is a styled container with a gentle gradient!
+                </div>
+                <div class="style-buttons">
+                    <button class="btn-primary" id="bgColorBtn">🎨 Change Color</button>
+                    <button class="btn-info" id="fontSizeBtn">📏 Increase Size</button>
+                    <button class="btn-danger" id="resetBtn">🔄 Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="task-section">
+            <h2>Task 5: Creating and Removing Elements</h2>
+            <div class="task5-container">
+                <div class="list-buttons">
+                    <button class="btn-success" id="addBtn">➕ Add Element</button>
+                    <button class="btn-danger" id="removeBtn">➖ Remove Element</button>
+                </div>
+                
+                <ul id="itemList">
+                    <li>🌸 Element 1</li>
+                    <li>🌷 Element 2</li>
+                    <li>🌹 Element 3</li>
+                </ul>
+                
+                <div class="item-counter">
+                    📊 Total Elements: <span id="itemCount">3</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        console.log("Yelizaveta Gagarina");
+        console.log("Group: JavaScript Developers");
+        alert("Hello, JavaScript World! 🌍");
+
+        const task1Console = document.getElementById('task1-console');
+        task1Console.innerHTML = `
+            <div class="console-line">Yelizaveta Gagarina</div>
+            <div class="console-line">Group: JavaScript Developers</div>
+            <div class="console-line" style="color: #ffc0e3; font-weight: bold;">✅ Script loaded successfully!</div>
+        `;
+
+        const name = "Yelizaveta Gagarina";
+        const age = 18;
+        const isStudent = true;
+        const height = 171;
+        const email = "07gagarinaliza29@gmail.com";
+
+        const variablesDisplay = document.getElementById('variables-display');
+        variablesDisplay.innerHTML = `
+            <div class="var-item">👤 <strong>Name:</strong> ${name}</div>
+            <div class="var-item">🎂 <strong>Age:</strong> ${age} years</div>
+            <div class="var-item">📚 <strong>Student:</strong> ${isStudent ? 'Yes ✓' : 'No ✗'}</div>
+            <div class="var-item">📏 <strong>Height:</strong> ${height} cm</div>
+            <div class="var-item">📧 <strong>Email:</strong> ${email}</div>
+        `;
+
+        const num1 = 24;
+        const num2 = 6;
+        const sum = num1 + num2;
+        const difference = num1 - num2;
+        const product = num1 * num2;
+        const quotient = num1 / num2;
+        const remainder = num1 % num2;
+        const power = num1 ** 2;
+
+        const operationsOutput = document.getElementById('operations-output');
+        operationsOutput.innerHTML = `
+            <div class="operation">➕ ${num1} + ${num2} = <strong>${sum}</strong></div>
+            <div class="operation">➖ ${num1} - ${num2} = <strong>${difference}</strong></div>
+            <div class="operation">✖️ ${num1} × ${num2} = <strong>${product}</strong></div>
+            <div class="operation">➗ ${num1} ÷ ${num2} = <strong>${quotient}</strong></div>
+            <div class="operation">📌 ${num1} % ${num2} = <strong>${remainder}</strong></div>
+            <div class="operation">🔢 ${num1} ** 2 = <strong>${power}</strong></div>
+        `;
+
+        const firstName = "Yelizaveta";
+        const lastName = "Gagarina";
+        const fullName = firstName + " " + lastName;
+        const greeting = `Hello, I'm ${firstName} ${lastName} and I'm ${age} years old!`;
+        const message = `I have ${num1} apples and ${num2} oranges.`;
+
+        const stringsOutput = document.getElementById('strings-output');
+        stringsOutput.innerHTML = `
+            <div class="operation">📝 Full Name: <strong>${fullName}</strong></div>
+            <div class="operation">💬 Greeting: <strong>${greeting}</strong></div>
+            <div class="operation">🍎 Message: <strong>${message}</strong></div>
+        `;
+
+        const changeButton = document.getElementById("changeButton");
+        const myParagraph = document.getElementById("myParagraph");
+        let isChanged = false;
+
+        changeButton.addEventListener("click", function() {
+            if (!isChanged) {
+                myParagraph.textContent = "✨ Text successfully changed! YAY! 🎉";
+                changeButton.textContent = "🔄 Restore Text";
+                isChanged = true;
+            } else {
+                myParagraph.textContent = "This is the original paragraph text. Click the button below to change it.";
+                changeButton.textContent = "✨ Change Text";
+                isChanged = false;
+            }
+        });
+
+        const styleBox = document.getElementById("styleBox");
+        const bgColorBtn = document.getElementById("bgColorBtn");
+        const fontSizeBtn = document.getElementById("fontSizeBtn");
+        const resetBtn = document.getElementById("resetBtn");
+
+        let currentFontSize = 18;
+        const colors = [
+            "linear-gradient(135deg, #ffc0e3 0%, #ffb3d9 100%)",
+            "linear-gradient(135deg, #b3e5b3 0%, #c0f0c0 100%)",
+            "linear-gradient(135deg, #b3d9ff 0%, #c0e6ff 100%)",
+            "linear-gradient(135deg, #ffe8b3 0%, #fff0c0 100%)",
+            "linear-gradient(135deg, #e8b3ff 0%, #f0c0ff 100%)",
+            "linear-gradient(135deg, #ffb3b3 0%, #ffc0c0 100%)"
+        ];
+
+        bgColorBtn.addEventListener("click", function() {
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            styleBox.style.background = randomColor;
+        });
+
+        fontSizeBtn.addEventListener("click", function() {
+            currentFontSize += 3;
+            styleBox.style.fontSize = currentFontSize + "px";
+        });
+
+        resetBtn.addEventListener("click", function() {
+            styleBox.style.background = "linear-gradient(135deg, #ffc0e3 0%, #ffb3d9 100%)";
+            currentFontSize = 18;
+            styleBox.style.fontSize = currentFontSize + "px";
+        });
+
+        const addBtn = document.getElementById("addBtn");
+        const removeBtn = document.getElementById("removeBtn");
+        const itemList = document.getElementById("itemList");
+        const itemCount = document.getElementById("itemCount");
+
+        const emojis = ["🌸", "🌷", "🌹", "🌺", "🌻", "🌼", "💐"];
+        let itemNumber = 3;
+
+        function updateItemCount() {
+            const items = itemList.querySelectorAll("li");
+            itemCount.textContent = items.length;
+        }
+
+        addBtn.addEventListener("click", function() {
+            itemNumber++;
+            const newItem = document.createElement("li");
+            const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+            newItem.textContent = `${randomEmoji} Элемент ${itemNumber}`;
+            itemList.appendChild(newItem);
+            updateItemCount();
+        });
+
+        removeBtn.addEventListener("click", function() {
+            const items = itemList.querySelectorAll("li");
+            if (items.length > 0) {
+                items[items.length - 1].remove();
+                updateItemCount();
+            } else {
+                alert("⚠️ No items to remove!");
+            }
+        });
+
+    </script>
+</body>
+</html>
